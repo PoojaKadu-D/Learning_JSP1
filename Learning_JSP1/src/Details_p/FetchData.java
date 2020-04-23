@@ -9,6 +9,7 @@ public class FetchData {
 	Long mobileno;
 	
 	
+	
 	public FetchData() {
 		//super();
 	}
@@ -43,4 +44,8 @@ public class FetchData {
 	public void setMobileno(Long mobileno) {
 		this.mobileno = mobileno;
 	}
+	
+	  @Override 
+	  public String toString() { return "FetchData [id=" + id + ", uname=" + uname + ", password=" + password + ", email=" + email +", mobileno=" + mobileno + "]"; }
+	 
 }

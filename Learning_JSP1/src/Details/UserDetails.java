@@ -1,6 +1,8 @@
 package Details;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,24 +17,45 @@ import Details_p.FetchData;
 @WebServlet("/UserDetails")
 public class UserDetails extends HttpServlet{
 
-	FetchData fetchData = null;
+	
 	
 	private static final long serialVersionUID = 1L;
 	
+	public UserDetails() {
+		
+		super();
+		
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		Details_DAO obj_dao = new Details_Implements();
-		String uname=request.getParameter("username");
+		String username=request.getParameter("username");
 		String password = request.getParameter("password");
+		//FetchData fetchData =null;
+		/*
+		 * fetchData = new FetchData(); fetchData.setUname(uname);
+		 * fetchData.setPassword(password);
+		 */
 		
-		fetchData = new FetchData();
-		fetchData.setUname(uname);
-		fetchData.setPassword(password);
-	
-		FetchData checkUserCredential = obj_dao.checkLoginCredential(uname, password);
-		if(checkUserCredential !=null)
+		FetchData fetchData = obj_dao.checkLoginCredential(username, password);
+		
+		ArrayList<FetchData> list = obj_dao.getAllDetails();
+//		System.out.println(list);
+		if(fetchData !=null)
 		{
-		request.setAttribute("msg", "Login_Successfully");
 		request.setAttribute("data", fetchData);
+		request.setAttribute("userList", list);
 		RequestDispatcher rd = request.getRequestDispatcher("/Login_success.jsp");
 		rd.forward(request,response);
 	
@@ -45,6 +68,7 @@ public class UserDetails extends HttpServlet{
 			rd.forward(request, response);
 	}
 
+	doGet(request, response);
 	
-	}
+}
 }
